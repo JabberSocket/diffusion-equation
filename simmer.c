@@ -14,6 +14,8 @@
 
 int main();
 void initialize_temperatures(double * temperature, int n_cells);
+void print_initial_values(double * temperature, int n_cells);
+void perform_simulation(double * temperature, int n_cells, int n_steps);
 
 int main()
 {
@@ -21,21 +23,20 @@ int main()
     int n_cells = (int) (BAR_LENGTH/CELL_SIZE); // Number of simulation cells
     int n_steps = (int) (SIMULATION_TIME/TIME_STEP); // Time steps
     double temperature[n_cells];
+
+    initialize_temperatures(temperature, n_cells);
+    print_initial_values(temperature, n_cells);
+    perform_simulation(temperature, n_cells, n_steps);
+
+    printf("\nDone. \n");
+}
+
+void perform_simulation(double * temperature, int n_cells, int n_steps)
+{
 //    double linear_diffusivity = BOLTZMAN/(AL_SP_HEAT*AL_DENSITY);
     double linear_diffusivity = 1;
     double ugly_const = 2*linear_diffusivity*TIME_STEP*(1.0/(pow(CELL_SIZE, 2)));
     int i, t;
-
-    printf("\nPerforming simulation...\n");
-    initialize_temperatures(temperature, n_cells);
-
-    /* Print initial values */
-    printf("\nTime: %4.2fs Bar temperature: ", 0*TIME_STEP);
-    for (i=0; i<n_cells; i++)
-    {
-        printf("%4.2fK ", temperature[i]);
-    }
-
     /* Calculate final state of heat simulation after SIMULATION_TIME */
     for (t=1; t<n_steps; t++)
     {
@@ -53,8 +54,17 @@ int main()
             printf("%4.2fK ", temperature[i]);
         }
     }
+}
 
-    printf("\nDone. \n");
+void print_initial_values(double * temperature, int n_cells)
+{
+    int i;
+    printf("\nPerforming simulation...\n");
+    printf("\nTime: %4.2fs Bar temperature: ", 0*TIME_STEP);
+    for (i=0; i<n_cells; i++)
+    {
+        printf("%4.2fK ", temperature[i]);
+    }
 }
 
 void initialize_temperatures(double * temperature, int n_cells)
