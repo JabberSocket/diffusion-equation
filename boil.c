@@ -51,8 +51,8 @@ void perform_simulation(int n_cells, double temperature[n_cells][n_cells][n_cell
 int main()
 {
     /* Initialize variables based on simulation settings (approx) */
-    int n_cells = (int) (BAR_LENGTH/CELL_SIZE); // Number of simulation cells per dimension
-    int n_steps = (int) (SIMULATION_TIME/TIME_STEP); // Time steps
+    int n_cells = round(BAR_LENGTH/CELL_SIZE); // Number of simulation cells per dimension
+    int n_steps = round(SIMULATION_TIME/TIME_STEP); // Time steps
     double temperature[n_cells][n_cells][n_cells];
 
     initial_conditions_uniform_box_boundary(n_cells, temperature);
@@ -81,7 +81,7 @@ void perform_simulation(int n_cells, double temperature[n_cells][n_cells][n_cell
     double ugly_const = 2*linear_diffusivity*TIME_STEP*(1.0/(pow(CELL_SIZE, 2)));
     int i, j, k, t;
     /* Calculate final state of heat simulation after SIMULATION_TIME */
-    for (t=1; t<n_steps; t++)
+    for (t=1; t<n_steps+1; t++)
     {
         // TODO track this in the data structure
         printf("\nTime: %06.2fs Bar temperature:\n", t*TIME_STEP);
