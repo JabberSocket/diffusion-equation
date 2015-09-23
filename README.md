@@ -12,7 +12,7 @@ A simple no-input 3D heat diffusion solver.
 Basic physical parameters of the simulation are specifed in define
 directives. This simple simulation doesn't do error checking, make sure
 your parameters are sane. E.g. we do float division on length/cell-size
-and cast it to an int to size the data structure.
+and round it to an int to size the data structure.
 
 A difference equation approach is taken to solve the diffusion equation
 in three dimentions. By using static outer-volume boundary conditions we
