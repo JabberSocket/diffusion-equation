@@ -3,6 +3,8 @@
 This repository contains some example/practice C having to do with solutions
 to the diffusion equation in various scenarios.
 
+These examples are all WIP so forgive us as we wrench on them.
+
 ## boil
 
 A simple no-input 3D heat diffusion solver.
@@ -75,6 +77,8 @@ Time: 010.00s Bar temperature:
 
 Done. 
 ```
+
+The printed data is a slice in ~the middle of the 3D volume.
 
 ## simmer
 
