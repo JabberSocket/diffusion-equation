@@ -28,8 +28,8 @@
 // Physical constants of the simulation
 #define BAR_LENGTH 1.0 // meters, will be a cube
 #define CELL_SIZE 0.2 // meters, resolution of heat spatial step
-#define TIME_STEP 1.0 // seconds
-#define SIMULATION_TIME 9.0 // seconds
+#define TIME_STEP 2.0 // seconds
+#define SIMULATION_TIME 10.0 // seconds
 #define BOLTZMAN 1.38064852e-23 // the Boltzman constant 'k' m^2 kg s^-2 K^-1
 #define AL_DENSITY 2700000 // g / m^3
 #define AL_SP_HEAT 0.897 // J/(g*K)
@@ -84,7 +84,7 @@ void perform_simulation(int n_cells, double temperature[n_cells][n_cells][n_cell
     for (t=1; t<n_steps; t++)
     {
         // TODO track this in the data structure
-        printf("\nTime: %4.2fs Bar temperature: ", t*TIME_STEP);
+        printf("\nTime: %06.2fs Bar temperature:\n", t*TIME_STEP);
         for (i=0; i<n_cells; i++)
         {
             for (j=0; j<n_cells; j++)
@@ -95,13 +95,13 @@ void perform_simulation(int n_cells, double temperature[n_cells][n_cells][n_cell
                     if (is_edge(i, j, k, n_cells))
                     {
                         if (k == n_cells/2)
-                            printf("%4.2fK ", temperature[i][j][k]);
+                            printf("%06.2fK ", temperature[i][j][k]);
                         continue;
                     }
 
                     temperature[i][j][k] = (1.0/(1.0 + 6*ugly_const))*(temperature[i][j][k] + ugly_const*(temperature[i+1][j][k] + temperature[i-1][j][k] + temperature[i][j+1][k] + temperature[i][j-1][k] + temperature[i][j][k+1] + temperature[i][j][k-1]));
                     if (k == n_cells/2)
-                        printf("%4.2fK ", temperature[i][j][k]);
+                        printf("%06.2fK ", temperature[i][j][k]);
                 }
             }
             printf("\n");
@@ -120,12 +120,12 @@ void print_initial_values(int n_cells, double temperature[n_cells][n_cells][n_ce
     int i, j;
     int k = n_cells / 2; // Rough int middle
     printf("\nPerforming simulation...\n");
-    printf("\nTime: %4.2fs Bar temperature: \n", 0*TIME_STEP);
+    printf("\nTime: %06.2fs Bar temperature: \n", 0*TIME_STEP);
     for (i=0; i<n_cells; i++)
     {
         for (j=0; j<n_cells; j++)
         {
-            printf("%4.2fK ", temperature[i][j][k]);
+            printf("%06.2fK ", temperature[i][j][k]);
         }
         printf("\n");
     }
