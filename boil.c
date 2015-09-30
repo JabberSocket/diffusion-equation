@@ -22,8 +22,10 @@
  *****************************************************************************/
 
 #include <stdio.h>
+#include <stdlib.h>
 #include <stdbool.h>
 #include <math.h>
+#include <argp.h>
 
 // Physical constants of the simulation
 #define BAR_LENGTH 1.0 // meters, will be a cube
@@ -33,6 +35,21 @@
 #define BOLTZMAN 1.38064852e-23 // the Boltzman constant 'k' m^2 kg s^-2 K^-1
 #define AL_DENSITY 2700000 // g / m^3
 #define AL_SP_HEAT 0.897 // J/(g*K)
+
+// Argp settings
+const char *argp_program_version = "boil 1.0";
+const char *argp_program_bug_address = "<kjsnavely@gmail.com>";
+static char doc[] = "boil.c: A simple 3D heat diffusion solver.";
+static struct argp_option options[] = {
+    {"dummy", 'd', "DUMMY", 0, "This optional switch is used to learn libargp ;P"},
+    {0}
+};
+static int parse_opt(int key, char * arg, struct argp_state * state){
+    switch (key){
+        case 'd': printf("\nsweet arg %s\n", arg); exit(0); break;
+    }
+    return 0;
+}
 
 int main();
 bool is_edge(int i, int j, int k, int length);
@@ -48,8 +65,12 @@ void perform_simulation(int n_cells, double temperature[n_cells][n_cells][n_cell
  * to initialize them and perform the simulation. The simulation writes to
  * stdout.
  */
-int main()
+int main(int argc, char ** argv)
 {
+    /* Learning  argp */
+    struct argp argp = {options, parse_opt, 0, doc};
+    argp_parse(&argp, argc, argv, 0, 0, 0);
+
     /* Initialize variables based on simulation settings (approx) */
     int n_cells = round(BAR_LENGTH/CELL_SIZE); // Number of simulation cells per dimension
     int n_steps = round(SIMULATION_TIME/TIME_STEP); // Time steps
