@@ -10,13 +10,17 @@
  *
  *  A difference equation approach is taken to solve the diffusion equation
  *  in three dimentions. By using static outer-volume boundary conditions we
- *  can use just the central-difference (or Crank-Nicolson) method.
- *    - https://en.wikipedia.org/wiki/Crank%E2%80%93Nicolson_method
+ *  can use the following:
+ *    - A forward difference approximation for the first-order derivative of
+ *      temperature by time.
+ *    - A space centered difference equation is choosen for the second order
+ *      derivative of temperature by time.
  *    - https://en.wikipedia.org/wiki/Heat_equation
  *
- *  It's not terribly complicated, really, but works well. In order to use
- *  non-static boundary conditions in the outer-volume a forward and backward
- *  Euler difference path must be added to the simulation core.
+ *  It's not terribly complicated, really, but works well. 
+ *
+ *  There is more work to be done to determine appropriate stability conditions
+ *  and support Neumann or mixed boundary conditions.
  *
  *  Usage: ./boil | tee boiled.logs
  *****************************************************************************/
@@ -29,9 +33,9 @@
 
 // Physical constants of the simulation
 #define BAR_LENGTH 1.0 // meters, will be a cube
-#define CELL_SIZE 0.2 // meters, resolution of heat spatial step
-#define TIME_STEP 2.0 // seconds
-#define SIMULATION_TIME 10.0 // seconds
+#define CELL_SIZE 0.1 // meters, resolution of heat spatial step
+#define TIME_STEP 0.5 // seconds
+#define SIMULATION_TIME 30.0 // seconds
 #define BOLTZMAN 1.38064852e-23 // the Boltzman constant 'k' m^2 kg s^-2 K^-1
 #define AL_DENSITY 2700000 // g / m^3
 #define AL_SP_HEAT 0.897 // J/(g*K)
